@@ -1,0 +1,16 @@
+---
+title: "Data Science for Public Policy"
+subtitle: "Assignment 04"
+author: "Asad & David"
+execute:
+  warning: false
+format:
+  html:
+    embed-resources: true
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+
+```
