@@ -9,10 +9,10 @@ format:
     embed-resources: true
 ---
 
-#### Data Source: [Living Standards Measurement Survey, Combodia - Completed by the World Bank in 2020](https://microdata.worldbank.org/index.php/catalog/4045/get-microdata)
+**Data Source:** [Living Standards Measurement Survey, Cambodia - Completed by the World Bank in 2020](https://microdata.worldbank.org/index.php/catalog/4045/get-microdata/)
 
 ```{r}
-library(tidyverse)
-library(ggplot2)
-
+housing <- read.csv("data/housing.csv")
+education <- read.csv("data/education.csv")
+health <- read.csv("data/health.csv")
 ```
