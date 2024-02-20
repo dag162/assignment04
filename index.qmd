@@ -13,6 +13,6 @@ format:
 
 ```{r}
 housing <- read.csv("data/housing.csv")
-education <- read.csv("data/education.csv")
+education <- read.csv("data/edu.csv")
 health <- read.csv("data/health.csv")
 ```
