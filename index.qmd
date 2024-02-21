@@ -20,7 +20,8 @@ format:
 #| include: false
 
 library(tidyverse)
-
+library(janitor)
+library(purrr)
 ```
 
 ###Data cleaning
@@ -35,7 +36,17 @@ spi <- read.csv("data/spi.csv")
 spi <- spi %>%
   select(country, iso3c, date, SPI.INDEX.PIL1, SPI.INDEX.PIL2, SPI.INDEX.PIL3,
          SPI.INDEX.PIL4, SPI.INDEX.PIL5, SPI.INDEX,
-         income, region, population)
+         income, region, population) %>%
+  slice(-1)
+
+spi <- spi %>%
+  clean_names()
+
+spi <- spi %>%
+  mutate(spi_index = ifelse(spi_index == "", NA, spi_index))
+
+map_dbl(.x=spi,.f=~sum(is.na(.x)))
+
   
 
 ```
