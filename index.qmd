@@ -9,16 +9,57 @@ format:
     embed-resources: true
 ---
 
-**Data Source:** [Living Standards Measurement Survey, Cambodia - Completed by the World Bank in 2020](https://microdata.worldbank.org/index.php/catalog/4045/get-microdata/)
+**Data Source:** [Statistical Performance Indicators by the World Bank](https://datacatalog.worldbank.org/search/dataset/0037996/Statistical-Performance-Indicators)
+
+## Pre-Work
+
+### Packages
 
 ```{r}
-spi <- read.csv("data/spi.csv")
+#| echo: false
+#| include: false
+
 library(tidyverse)
+
+```
+
+###Data cleaning
+
+```{r}
+#| echo: false
+
+
+spi <- read.csv("data/spi.csv")
+
 
 spi <- spi %>%
   select(country, iso3c, date, SPI.INDEX.PIL1, SPI.INDEX.PIL2, SPI.INDEX.PIL3,
          SPI.INDEX.PIL4, SPI.INDEX.PIL5, SPI.INDEX,
          income, region, population)
   
+
+```
+
+## Graph 1
+
+```{r}
+
+```
+
+## Graph 2
+
+```{r}
+
+```
+
+## Graph 3
+
+```{r}
+
+```
+
+## Graph 4
+
+```{r}
 
 ```
