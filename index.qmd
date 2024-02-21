@@ -12,7 +12,13 @@ format:
 **Data Source:** [Living Standards Measurement Survey, Cambodia - Completed by the World Bank in 2020](https://microdata.worldbank.org/index.php/catalog/4045/get-microdata/)
 
 ```{r}
-housing <- read.csv("data/housing.csv")
-education <- read.csv("data/edu.csv")
-health <- read.csv("data/health.csv")
+spi <- read.csv("data/spi.csv")
+library(tidyverse)
+
+spi <- spi %>%
+  select(country, iso3c, date, SPI.INDEX.PIL1, SPI.INDEX.PIL2, SPI.INDEX.PIL3,
+         SPI.INDEX.PIL4, SPI.INDEX.PIL5, SPI.INDEX,
+         income, region, population)
+  
+
 ```
