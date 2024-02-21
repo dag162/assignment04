@@ -28,6 +28,7 @@ library(purrr)
 
 ```{r}
 #| echo: false
+#| include: false
 
 
 spi <- read.csv("data/spi.csv")
