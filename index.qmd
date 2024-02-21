@@ -24,7 +24,7 @@ library(janitor)
 library(purrr)
 ```
 
-###Data cleaning
+### Data cleaning
 
 ```{r}
 #| echo: false
