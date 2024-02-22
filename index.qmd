@@ -44,7 +44,26 @@ spi <- spi %>%
   clean_names()
 
 spi <- spi %>%
-  mutate(spi_index = ifelse(spi_index == "", NA, spi_index))
+  mutate(spi_index_pil1 = as.numeric(spi_index_pil1))%>%
+  mutate(spi_index_pil2 = as.numeric(spi_index_pil2))%>%
+  mutate(spi_index_pil3 = as.numeric(spi_index_pil3))%>%
+  mutate(spi_index_pil4 = as.numeric(spi_index_pil4))%>%
+  mutate(spi_index_pil5 = as.numeric(spi_index_pil5))%>%
+  mutate(spi_index = as.numeric(spi_index))
+
+spi <- spi %>%
+  mutate(spi_index = ifelse(spi_index == "", NA, spi_index))%>%
+  mutate(country = ifelse(country == "", NA, country)) %>%
+  mutate(iso3c = ifelse(iso3c == "", NA, iso3c))%>%
+  mutate(date = ifelse(date == "", NA, date))%>%
+  mutate(spi_index_pil1 = ifelse(spi_index_pil1 == "", NA, spi_index_pil1))%>%
+  mutate(spi_index_pil2 = ifelse(spi_index_pil2 == "", NA, spi_index_pil2)) %>%
+  mutate(spi_index_pil3 = ifelse(spi_index_pil3 == "", NA, spi_index_pil3))%>%
+  mutate(spi_index_pil4 = ifelse(spi_index_pil4 == "", NA, spi_index_pil4))%>%
+  mutate(spi_index_pil5 = ifelse(spi_index_pil5 == "", NA, spi_index_pil5))%>%
+  mutate(income = ifelse(income == "", NA, income))%>%
+  mutate(region = ifelse(region == "", NA, region))%>%
+  mutate(population = ifelse(population == "", NA, population))
 
 map_dbl(.x=spi,.f=~sum(is.na(.x)))
 
@@ -61,6 +80,38 @@ map_dbl(.x=spi,.f=~sum(is.na(.x)))
 ## Graph 2
 
 ```{r}
+#| echo: false
+
+spi_pillars <- spi %>%
+  select(country, spi_index_pil1, 
+         spi_index_pil2, spi_index_pil3, 
+         spi_index_pil4, spi_index_pil5, 
+         region)%>%
+  pivot_longer(cols = c(spi_index_pil1, spi_index_pil2, 
+                        spi_index_pil3, spi_index_pil4, 
+                        spi_index_pil5),
+               names_to = "pillars_num",
+               values_to = "pillar_score")
+
+pillars_name <- c("spi_index_pil1" = "Pillar 1: Data use", 
+                  "spi_index_pil2" = "Pillar 2: Data services",
+                  "spi_index_pil3" = "Pillar 3: Data products",
+                  "spi_index_pil4" = "Pillar 4: Data sources",
+                  "spi_index_pil5" = "Pillar 5: Data infrastructure")
+
+mean_pillars <- spi_pillars %>%
+  group_by(pillars_num) %>%
+  summarise(overall_mean = mean(pillar_score, na.rm = TRUE)) 
+  
+spi_pillars %>%
+  group_by(pillars_num, region)%>%
+  summarise(mean = mean(pillar_score, na.rm = TRUE))%>%
+  ggplot()+
+  geom_col(aes(x = region, y = mean, fill = region))+
+  geom_hline(data = mean_pillars, aes(yintercept = overall_mean), linetype = "dashed", color = "black")+
+  facet_wrap(~ pillars_num, labeller = as_labeller(pillars_name))+
+  theme(axis.text.x = element_blank())
+  
 
 ```
 
