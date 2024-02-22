@@ -79,9 +79,11 @@ map_dbl(.x=spi,.f=~sum(is.na(.x)))
 
 ## Graph 2
 
+#### The Statistical Performance Index is comprised of 5 pillars. With this plot we want to understand the performance of each region of the world in each pillar of the Index. Additionally, we can see the global mean for each pillar to see the relative stand of each region.
+
 ```{r}
 #| echo: false
-
+#Setting the dataframe longer to have the number of pillar as one varibale and the scores of those pillars as a second variable.
 spi_pillars <- spi %>%
   select(country, spi_index_pil1, 
          spi_index_pil2, spi_index_pil3, 
@@ -93,12 +95,14 @@ spi_pillars <- spi %>%
                names_to = "pillars_num",
                values_to = "pillar_score")
 
+#Creating an object containing the names we want to appear in the plot for each pillar.
 pillars_name <- c("spi_index_pil1" = "Pillar 1: Data use", 
                   "spi_index_pil2" = "Pillar 2: Data services",
                   "spi_index_pil3" = "Pillar 3: Data products",
                   "spi_index_pil4" = "Pillar 4: Data sources",
                   "spi_index_pil5" = "Pillar 5: Data infrastructure")
 
+#Creating an object that contains the global mean for each pillar. We want this to appear in the plot for each pilar.
 mean_pillars <- spi_pillars %>%
   group_by(pillars_num) %>%
   summarise(overall_mean = mean(pillar_score, na.rm = TRUE)) 
