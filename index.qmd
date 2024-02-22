@@ -114,6 +114,7 @@ spi_pillars %>%
   geom_col(aes(x = region, y = mean, fill = region))+
   geom_hline(data = mean_pillars, aes(yintercept = overall_mean), linetype = "dashed", color = "black")+
   facet_wrap(~ pillars_num, labeller = as_labeller(pillars_name))+
+   labs(title = "Region's performace per SPI's pillar", subtitle = "Mean score of SPI pillars in each region of the world")+
   theme(axis.text.x = element_blank())
   
 
