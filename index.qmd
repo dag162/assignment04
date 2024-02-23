@@ -144,7 +144,6 @@ spi_time %>%
             linewidth = 1)+
   labs(title = "Historic of Global SPI mean per region", 
        subtitle = "Mean score of Global SPI in each region from 2016 to 2022")+
-  scale_y_log10()+
   theme_clean()
 ```
 
