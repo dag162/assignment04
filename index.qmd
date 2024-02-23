@@ -22,6 +22,7 @@ format:
 library(tidyverse)
 library(janitor)
 library(purrr)
+library(ggthemes)
 ```
 
 ### Data cleaning
@@ -122,8 +123,29 @@ spi_pillars %>%
 
 ## Graph 3
 
-```{r}
+#### With this plot we want to observe how the global Statitical Performance Indicator score for each region has changed over time.
 
+```{r}
+#| echo: false
+
+spi_time <- spi %>%
+  select(country, spi_index,region,date)
+
+
+spi_time %>%
+  filter(date %in% 2016:2022)%>%
+  group_by(date, region)%>%
+  summarize(mean = mean(spi_index, na.rm = TRUE))%>%
+  ggplot()+
+  geom_line(aes(x = date, 
+                y = mean, 
+                group = region, 
+                color = region),
+            linewidth = 1)+
+  labs(title = "Historic of Global SPI mean per region", 
+       subtitle = "Mean score of Global SPI in each region from 2016 to 2022")+
+  scale_y_log10()+
+  theme_clean()
 ```
 
 ## Graph 4
