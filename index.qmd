@@ -74,7 +74,46 @@ map_dbl(.x=spi,.f=~sum(is.na(.x)))
 
 ## Graph 1
 
+### This graph has two parts. The first shows a scatter plot by regions, comparing the countries' SPI indexes over the global average (the dotted line). The second bar graph builds upon that by showing the number of countries in each region which are above the global average for 2022.
+
 ```{r}
+
+library(patchwork)
+
+spi_2022 <- spi %>%
+  filter(date == 2022)
+
+overall_avg <- mean(spi_2022$spi_index, na.rm = TRUE)
+obs_per_region <- tapply(spi_2022$spi_index > overall_avg, spi_2022$region, sum, na.rm = TRUE)
+
+obs_df <- data.frame(region = names(obs_per_region), obs_count = obs_per_region)
+
+scatter_plot <- ggplot(spi_2022, aes(x = region, y = spi_index, color = region)) +
+  geom_point(position = position_jitter(width = 0), size = 3, show.legend = FALSE) +
+  geom_hline(yintercept = overall_avg, linetype = "dashed", color = "blue", size = 1) +
+  labs(title = "Regional SPI compared with world average (2022)",
+       x = "Region",
+       y = "SPI") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(hjust = 0.5),
+        panel.grid = element_blank(),
+        panel.grid.major.y = element_line(color = "gray", linetype = "dotted")) +
+  scale_y_continuous(breaks = seq(0, max(spi_2022$spi_index, na.rm = TRUE) + 10, by = 10)) 
+
+bar_graph <- ggplot(obs_df, aes(x = region, y = obs_count, fill = region)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  labs(title = "Number of Countries > Mean",
+       x = "Region",
+       y = "Countries") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+scatter_plot + bar_graph + plot_layout(ncol = 2, widths = c(3, 2))
+
+
+
 
 ```
 
@@ -149,6 +188,17 @@ spi_time %>%
 
 ## Graph 4
 
+### This graph shows the trend of SPI as per the population of the respective countries. The line of best fit added shows a positive correlation between the two.
+
 ```{r}
+
+ggplot(spi_2022, aes(x = population, y = spi_index)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +  # Add a line of best fit
+  labs(title = "SPI vs Population",
+       x = "Population (log)",
+       y = "SPI") +
+  scale_x_log10() +
+  theme_economist_white()
 
 ```
