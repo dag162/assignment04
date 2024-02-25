@@ -74,10 +74,10 @@ map_dbl(.x=spi,.f=~sum(is.na(.x)))
 
 ## Graph 1
 
-### This graph has two parts. The first shows a scatter plot by regions, comparing the countries' SPI indexes over the global average (the dotted line). The second bar graph builds upon that by showing the number of countries in each region which are above the global average for 2022.
+#### This graph has two parts. The first shows a scatter plot by regions, comparing the countries' SPI indexes over the global average (the dotted line). The second bar graph builds upon that by showing the number of countries in each region which are above the global average for 2022.
 
 ```{r}
-
+#| echo: false
 library(patchwork)
 
 spi_2022 <- spi %>%
@@ -188,10 +188,10 @@ spi_time %>%
 
 ## Graph 4
 
-### This graph shows the trend of SPI as per the population of the respective countries. The line of best fit added shows a positive correlation between the two.
+#### This graph shows the trend of SPI as per the population of the respective countries. The line of best fit added shows a positive correlation between the two.
 
 ```{r}
-
+#| echo: false
 ggplot(spi_2022, aes(x = population, y = spi_index)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "blue") +  # Add a line of best fit
