@@ -16,8 +16,7 @@ format:
 ### Packages
 
 ```{r}
-#| echo: false
-#| include: false
+
 
 library(tidyverse)
 library(janitor)
@@ -28,8 +27,6 @@ library(ggthemes)
 ### Data cleaning
 
 ```{r}
-#| echo: false
-#| include: false
 
 
 spi <- read.csv("data/spi.csv")
@@ -66,8 +63,6 @@ spi <- spi %>%
   mutate(region = ifelse(region == "", NA, region))%>%
   mutate(population = ifelse(population == "", NA, population))
 
-map_dbl(.x=spi,.f=~sum(is.na(.x)))
-
   
 
 ```
@@ -77,12 +72,13 @@ map_dbl(.x=spi,.f=~sum(is.na(.x)))
 #### This graph has two parts. The first shows a scatter plot by regions, comparing the countries' SPI indexes over the global average (the dotted line). The second bar graph builds upon that by showing the number of countries in each region which are above the global average for 2022.
 
 ```{r}
-#| echo: false
+
 library(patchwork)
 
 spi_2022 <- spi %>%
   filter(date == 2022)
 
+#creating variables of means to compare regional data with
 overall_avg <- mean(spi_2022$spi_index, na.rm = TRUE)
 obs_per_region <- tapply(spi_2022$spi_index > overall_avg, spi_2022$region, sum, na.rm = TRUE)
 
@@ -122,7 +118,7 @@ scatter_plot + bar_graph + plot_layout(ncol = 2, widths = c(3, 2))
 #### The Statistical Performance Index is comprised of 5 pillars. With this plot we want to understand the performance of each region of the world in each pillar of the Index. Additionally, we can see the global mean for each pillar to see the relative stand of each region.
 
 ```{r}
-#| echo: false
+
 #Setting the dataframe longer to have the number of pillar as one varibale and the scores of those pillars as a second variable.
 spi_pillars <- spi %>%
   select(country, spi_index_pil1, 
@@ -165,7 +161,7 @@ spi_pillars %>%
 #### With this plot we want to observe how the global Statitical Performance Indicator score for each region has changed over time.
 
 ```{r}
-#| echo: false
+
 
 spi_time <- spi %>%
   select(country, spi_index,region,date)
@@ -191,7 +187,7 @@ spi_time %>%
 #### This graph shows the trend of SPI as per the population of the respective countries. The line of best fit added shows a positive correlation between the two.
 
 ```{r}
-#| echo: false
+
 ggplot(spi_2022, aes(x = population, y = spi_index)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "blue") +  # Add a line of best fit
