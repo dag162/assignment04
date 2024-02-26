@@ -11,6 +11,8 @@ format:
 
 **Data Source:** [Statistical Performance Indicators by the World Bank](https://datacatalog.worldbank.org/search/dataset/0037996/Statistical-Performance-Indicators)
 
+###The Statistical Performance Indicators (SPI) is a scoring frame developed by the World Bank to quantify data sources, availability and usage in countries. It includes area-wise scores, and an overall index.
+
 ## Pre-Work
 
 ### Packages
@@ -66,6 +68,7 @@ spi <- spi %>%
   
 
 ```
+
 
 ## Graph 1
 
